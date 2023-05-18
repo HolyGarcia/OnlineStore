@@ -1,48 +1,62 @@
-﻿using OnlineStore.Domain.Core;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineStore.Domain.Core;
+using OnlineStore.Infraestructure.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace OnlineStore.Infraestructure.Core
 {
     public abstract class BaseRepository<TEntity> : Domain.Repository.IBaseRepository<TEntity> where TEntity : BaseEntity
     {
-        public Task<bool> Exists(Expression<Func<TEntity, bool>> filter)
-        {
-            throw new NotImplementedException();
+        private readonly SaleContext context;
+        private readonly DbSet<TEntity> myDbSet;
+
+        public BaseRepository(SaleContext context) { 
+        
+            this.context = context;
+            this .myDbSet = this.context.Set<TEntity>();
+
         }
-        public Task<TEntity> Find(Expression<Func<TEntity, bool>> filter)
+
+        public async virtual Task<bool> Exists(Expression<Func<TEntity, bool>> filter)
         {
-            throw new NotImplementedException();
+            return await this.myDbSet.AnyAsync(filter);
         }
-        public Task<IEnumerable<TEntity>> getAll()
+        public async virtual Task<TEntity> Find(Expression<Func<TEntity, bool>> filter)
         {
-            throw new NotImplementedException();
+            return await this.myDbSet.FindAsync(filter);
         }
-        public Task<TEntity> GetEntityById(int Id)
+
+        public async virtual Task<IEnumerable<TEntity>> GetAll()
         {
-            throw new NotImplementedException();
+            return await this.myDbSet.ToListAsync();
         }
-        public Task Save(TEntity entity)
+        public async virtual Task<TEntity> GetEntityById(int Id)
         {
-            throw new NotImplementedException();
+            return await this.myDbSet.FindAsync(Id);
         }
-        public Task Save(params TEntity[] entities)
+        public async virtual Task Save(TEntity entity)
         {
-            throw new NotImplementedException();
+            await this.myDbSet.AddAsync(entity);
         }
-        public Task SaveChanges()
+        public async virtual Task Save(params TEntity[] entities)
         {
-            throw new NotImplementedException();
+            await this.myDbSet.AddRangeAsync(entities);
         }
-        public Task Update(TEntity entity)
+        public async virtual Task SaveChanges()
         {
-            throw new NotImplementedException();
+            await this.context.SaveChangesAsync();
         }
-        public Task Update(params TEntity[] entities)
+        public async virtual Task Update(TEntity entity)
         {
-            throw new NotImplementedException();
+             this.myDbSet.Update(entity);
+        }
+        public async virtual Task Update(params TEntity[] entities)
+        {
+             this.myDbSet.UpdateRange(entities);
         }
     }
 }

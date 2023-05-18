@@ -1,4 +1,5 @@
 ﻿using OnlineStore.Domain.Core;
+using OnlineStore.Domain.Entities.Almacen;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -9,7 +10,7 @@ namespace OnlineStore.Domain.Repository
     public interface IBaseRepository<TEntity> where TEntity : BaseEntity
     {
         Task<TEntity> GetEntityById(int Id);
-        Task<IEnumerable<TEntity>> getAll();
+        Task<IEnumerable<TEntity>> GetAll();
         Task<TEntity> Find(Expression<Func<TEntity, bool>> filter);
         Task<bool> Exists(Expression<Func<TEntity, bool>> filter);
         Task Save(TEntity entity);
@@ -17,8 +18,6 @@ namespace OnlineStore.Domain.Repository
         Task Update(TEntity entity);
         Task Update(params TEntity[] entities);
         Task SaveChanges();
-
        
-
     }
 }
