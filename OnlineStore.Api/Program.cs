@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContextDependency(builder.Configuration.GetConnectionString("SalesContext"));
+builder.Services.AddContextDependency(builder.Configuration.GetConnectionString("SalesContext"));
 builder.Services.AddAlmacenDependency();
 
 var app = builder.Build();

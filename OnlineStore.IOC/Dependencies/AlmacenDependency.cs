@@ -1,16 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using OnlineStore.Infraestructure.Interfaces;
+using OnlineStore.Infraestructure.Repositories;
+using System.Threading.Tasks;
 
 namespace OnlineStore.IOC.Dependencies
 {
-    internal class AlmacenDependency
+    public static class AlmacenDependency
     {
-
-        public static void AddAlmacenDependency(IServiceCollection services)
+        public static void AddAlmacenDependency(this IServiceCollection services)
         {
-
+            services.AddScoped<IcategoriaRepository, CategoriaRepository>();
         }
     }
 }
