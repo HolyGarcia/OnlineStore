@@ -1,5 +1,8 @@
 ﻿
+
 using Microsoft.EntityFrameworkCore;
+using OnlineStore.Domain.Entities.Almacen;
+using OnlineStore.Infraestructure.Configurations;
 
 namespace OnlineStore.Infraestructure.Context
 {
@@ -14,7 +17,15 @@ namespace OnlineStore.Infraestructure.Context
         {
 
         }
-          
-     
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.AddConfigurationAlmacenEntity();
+            modelBuilder.AddConfigurationSeguridadEntity();
+            modelBuilder.AddConfigurationVentasEntity();
+
+        }
+
+
     }
 }

@@ -3,7 +3,7 @@ using OnlineStore.Domain.Core;
 
 namespace OnlineStore.Domain.Entities.Seguridad
 {
-    public class Menu : BaseEntity
+    public class Menu : Core.BaseEntity
     {
         public int Id { get; set; }
         public int? IdMenuPadre { get; set; }

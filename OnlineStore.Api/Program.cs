@@ -1,5 +1,4 @@
-using Microsoft.EntityFrameworkCore;
-using OnlineStore.Infraestructure.Context;
+
 using OnlineStore.IOC.Dependencies;
 
     var builder = WebApplication.CreateBuilder(args);

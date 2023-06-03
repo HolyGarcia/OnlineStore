@@ -1,7 +1,7 @@
 ﻿
 namespace OnlineStore.Application.Core
 {
-    public class ServiceResults
+    public class ServiceResult
     {
         public string Message { get; set; }
         public bool Success { get; set; }

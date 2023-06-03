@@ -2,7 +2,7 @@
 
 namespace OnlineStore.Domain.Entities.Ventas
 {
-    public class DetalleVentas : BaseEntity
+    public partial class DetalleVentas : BaseEntity
     {
         public int Id { get; set; }
         public int? IdVenta { get; set; }

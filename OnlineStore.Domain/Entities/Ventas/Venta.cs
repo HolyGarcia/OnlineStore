@@ -3,7 +3,7 @@ using System;
 
 namespace OnlineStore.Domain.Entities.Ventas
 {
-    public class Venta
+    public partial class Venta
     {
         public int Id { get; set; }
         public string? NumeroVenta { get; set; }
