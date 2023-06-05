@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Domain.Entities.Almacen;
 using OnlineStore.Infraestructure.Configurations;
+using SalesOnline.Infraestructure.Configurations;
 
 namespace OnlineStore.Infraestructure.Context
 {
@@ -13,7 +14,8 @@ namespace OnlineStore.Infraestructure.Context
 
         }
 
-    public SaleContext(DbContextOptions<SaleContext> options) :base(options)
+    public SaleContext(DbContextOptions<SaleContext> options) 
+            :base(options)
         {
 
         }
@@ -22,7 +24,9 @@ namespace OnlineStore.Infraestructure.Context
         {
             modelBuilder.AddConfigurationAlmacenEntity();
             modelBuilder.AddConfigurationSeguridadEntity();
-            modelBuilder.AddConfigurationVentasEntity();
+            modelBuilder.AddConfigurationVentaEntity();
+
+            base.OnModelCreating(modelBuilder);
 
         }
 

@@ -3,7 +3,7 @@ using OnlineStore.Infraestructure.Interfaces;
 
 namespace OnlineStore.Api.Controllers
 {
-        [Route("api/controllers]")]
+        [Route("api/[controller]")]
         [ApiController]
         public class CategoriaController : ControllerBase
         {

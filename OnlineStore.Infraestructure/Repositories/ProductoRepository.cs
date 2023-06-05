@@ -30,6 +30,11 @@ namespace OnlineStore.Infraestructure.Repositories
             throw new System.NotImplementedException();
         }
 
+        public Task<ProductoCategoriaModel> GetProductoCategoria(int productoId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async override Task Save (Producto entity)
         {
             if (!await this.context.Categoria.AnyAsync(cd => cd.Id == entity.IdCategoria)) 
@@ -41,5 +46,9 @@ namespace OnlineStore.Infraestructure.Repositories
             await base.SaveChanges();
         }
 
+        Task<List<ProductoModel>> IproductoRepository.GetProductoByCategory(int categoryId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

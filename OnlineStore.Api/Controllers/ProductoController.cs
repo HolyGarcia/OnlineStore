@@ -27,7 +27,7 @@ namespace OnlineStore.Api.Controllers
             var productos = await this.productoService.Get();
             return Ok(productos);
         }
-        [HttpGet("{id")]
+        [HttpGet("{id}")]
   
         public async Task<IActionResult> Get(int id)
         {
