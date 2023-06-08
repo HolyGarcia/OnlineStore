@@ -1,7 +1,10 @@
 
+using Microsoft.EntityFrameworkCore;
+using OnlineStore.Infraestructure.Context;
 using OnlineStore.IOC.Dependencies;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
-    var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -14,6 +17,7 @@ builder.Services.AddContextDependency(builder.Configuration.GetConnectionString(
 builder.Services.AddAlmacenDependency();
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

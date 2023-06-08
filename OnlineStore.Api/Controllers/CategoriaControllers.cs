@@ -15,9 +15,9 @@ namespace OnlineStore.Api.Controllers
             }
 
             [HttpGet]
-            public async Task<IActionResult> Get()
+            public IActionResult Get()
             {
-                var categories = await this.categoriaRepository.GetAll();
+                var categories = this.categoriaRepository.GetAll();
                 return Ok(categories);
             }
             [HttpGet("{id}")]

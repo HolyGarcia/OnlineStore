@@ -41,7 +41,7 @@ namespace OnlineStore.Infraestructure.Configurations
             .HasMaxLength(100)
             .IsUnicode(false);
 
-        entity.Property(e => e.Precio).HasColumnType("decimal(10, 2)");
+        entity.Property(e => e.Precio).HasColumnType("decimal(8, 2)");
 
         entity.Property(e => e.UrlImagen)
             .HasMaxLength(500)
