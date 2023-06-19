@@ -57,8 +57,19 @@ namespace OnlineStore.Api.Controllers
             return Ok(result);
         }
 
+        [HttpPost("SaveProducto")]
+        public async Task<IActionResult> Post([FromBody] ProductoAddDto productoAddDto)
+        {
+            var result = await this.productoService.SaveProducto(productoAddDto);
 
-        [HttpPost("UpdateProduct")]
+            if (!result.Success)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+
+        [HttpPost("UpdateProducto")]
         public async Task<IActionResult> Put([FromBody] ProductoUpdateDto productoUpdate)
         {
             var result = await this.productoService.ModifyProducto(productoUpdate);

@@ -14,7 +14,8 @@ namespace OnlineStore.Infraestructure.Core
         private readonly SaleContext context;
         private readonly DbSet<TEntity> myDbSet;
 
-        public BaseRepository(SaleContext context) { 
+        public BaseRepository(SaleContext context) 
+        { 
         
             this.context = context;
             this .myDbSet = this.context.Set<TEntity>();
@@ -28,6 +29,11 @@ namespace OnlineStore.Infraestructure.Core
         public async virtual Task<TEntity> Find(Expression<Func<TEntity, bool>> filter)
         {
             return await this.myDbSet.FindAsync(filter);
+        }
+
+        public async Task<IEnumerable<TEntity>> FindAll(Expression<Func<TEntity, bool>> filter)
+        {
+            return await this.myDbSet.Where(filter).ToListAsync();
         }
 
         public async virtual Task<IEnumerable<TEntity>> GetAll()

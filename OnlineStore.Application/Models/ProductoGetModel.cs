@@ -13,8 +13,8 @@ namespace OnlineStore.Application.Models
         public string? Categoria { get; set;}
         public int? Stock { get; set;}
         public string? UrlImagen { get; set;}
-        public string? NombreImagen { get;}
-        public decimal? precio { get; set;}
+        public string? NombreImagen { get; set; }
+        public decimal? Precio { get; set;}
 
     }
 }

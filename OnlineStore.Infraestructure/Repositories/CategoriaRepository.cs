@@ -22,20 +22,6 @@ namespace OnlineStore.Infraestructure.Repositories
             this.logger = logger;
         }
 
-        public async override Task<IEnumerable<Categoria>> GetAll()
-        {
-            List<Categoria> categorias = new List<Categoria>();
-
-            try
-            {
-                categorias = await this.context.Categoria.Where(cd => !cd.Eliminado).ToListAsync();
-            }
-
-            catch (Exception ex)
-            {
-                this.logger.LogError("Error obteniendo categorias", ex.ToString());
-            } 
-            return categorias;
-        }
+        
     }
 }

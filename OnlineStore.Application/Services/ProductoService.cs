@@ -83,20 +83,20 @@ namespace OnlineStore.Application.Services
             catch (Exception ex)
             {
                 result.Success = false;
-                result.Message = "Error al obtener las categrias";
+                result.Message = "Error al obtener las categorías";
                 this.logger.LogError(result.Message, ex.ToString());
             }
 
             return result;
         }
 
-        public async Task<ServiceResult> GetProductosByCategoria(int categoriaId)
+        public async Task<ServiceResult> GetProductosByCategoria(int IdCategoria)
         {
             ServiceResult results = new ServiceResult();
 
             try
             {
-                results.Data = await this.productoRepository.GetProductoByCategory(categoriaId);
+                results.Data = await this.productoRepository.GetProductoByCategory(IdCategoria);
             }
 
             catch (Exception ex)
@@ -141,9 +141,65 @@ namespace OnlineStore.Application.Services
 
         }
 
+        public async Task<ProductoAddResponse> SaveProducto(ProductoAddDto productoAddDto)
+        {
+            ProductoAddResponse productoAddResponse = new ProductoAddResponse();
+
+
+            try
+            {
+                if (String.IsNullOrEmpty(productoAddDto.Descripcion))
+                {
+                    productoAddResponse.Message = "Descripcion del producto es requerido";
+                    productoAddResponse.Success = false;
+                    return productoAddResponse;
+                }
+              
+
+                Producto producto = productoAddDto.ConvertDtoAddProductoToProducto();
+          
+
+                await this.productoRepository.Save(producto);
+                productoAddResponse.ProductoId = producto.Id;
+                
+
+            }
+
+           catch (Exception ex)
+            { 
+                this.logger.Log(LogLevel.Error,"Error al Agregar el producto", ex.ToString());
+            }
+
+            return productoAddResponse;
+        }
+
+
+
         private async Task<List<Models.ProductoGetModel>> getProductos(int? Id = null)
         {
             List<Models.ProductoGetModel> productos = new List<Models.ProductoGetModel>();
+
+            try
+            {
+                productos = (from prod in (await this.productoRepository.GetAll())
+                            where prod.Id == Id || !Id.HasValue
+                            select new Models.ProductoGetModel()
+                            {
+                                Descripcion = prod.Descripcion,
+                                Marca = prod.Marca,
+                                Precio = prod.Precio,
+                                ProductoId = prod.Id,
+                                Stock = prod.Stock,
+                                NombreImagen = prod.NombreImagen,
+                                UrlImagen = prod.UrlImagen
+                            }).ToList();
+            }
+
+            catch (Exception ex)
+            {
+                productos = null;
+                this.logger.Log(LogLevel.Error, "Error obteniendo los productos", ex.ToString());
+            }
 
             return productos;
         }

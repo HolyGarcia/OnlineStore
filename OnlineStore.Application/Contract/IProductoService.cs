@@ -9,7 +9,7 @@ namespace OnlineStore.Application.Contract
     {
         Task<ServiceResult> Get();
         Task<ServiceResult> GetById(int id);
-        //Task<ProductoAddResponse> SaveProducto(ProductoAddDto productoAddDto);
+        Task<ProductoAddResponse> SaveProducto(ProductoAddDto productoAddDto);
         Task<ServiceResult> ModifyProducto(ProductoUpdateDto productoUpdateDto);
         Task<ServiceResult> GetProductoCategoriaDetail(int productoId);
         Task<ServiceResult> GetProductosByCategoria(int categoriaId);

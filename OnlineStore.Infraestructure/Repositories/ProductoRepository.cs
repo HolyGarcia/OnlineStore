@@ -8,8 +8,7 @@ using OnlineStore.Infraestructure.Interfaces;
 using OnlineStore.Infraestructure.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnlineStore.Infraestructure.Repositories
@@ -25,17 +24,78 @@ namespace OnlineStore.Infraestructure.Repositories
             this.logger = logger;
         }
 
-        public async Task<List<Producto>> GetProductoByCategory(int categoryId)
+        public async Task<List<ProductoModel>> GetProductoByCategoria(int categoriaId)
         {
-            throw new System.NotImplementedException();
+            List<ProductoModel> productos = new List<ProductoModel>();
+
+            try
+            {
+                productos = (from pro in (await base.GetAll()).ToList()
+                             join proca in context.ProductoCategoria.ToList() on pro.Id equals proca.ProductoId
+                             join ca in context.Categoria.ToList() on proca.CategoriaId equals ca.Id
+                             where proca.CategoriaId == categoriaId
+                             select new ProductoModel()
+                             {
+                                 Descripcion = pro.Descripcion,
+                                 IdCategoria = proca.CategoriaId,
+                                 Marca = pro.Marca,
+                                 NombreImagen = pro.NombreImagen,
+                                 Precio = pro.Precio,
+                                 ProductoId = pro.Id,
+                                 Stock = pro.Stock,
+                                 UrlImagen = pro.UrlImagen,
+                                 Categoria = ca.Descripcion
+                             }).ToList();
+            }
+
+            catch (Exception ex) 
+            {
+                this.logger.LogError("Error obteniendo productos con sus categorías", ex.Message);
+            }
+
+            return productos;
         }
 
-        public Task<ProductoCategoriaModel> GetProductoCategoria(int productoId)
+        public async Task<ProductoCategoriaModel> GetProductoCategoria(int productoId)
         {
-            throw new NotImplementedException();
+            ProductoCategoriaModel productoCategoria = new ProductoCategoriaModel();
+
+            try
+            {
+                var productoCategories = context.Producto.Include(cd => cd.ProductoCategoria)
+                                                                    .FirstOrDefault(cd => cd.Id == productoId);
+
+                if(productoCategories != null)
+                {
+                    productoCategoria.ProductoModel.Descripcion = productoCategories.Descripcion;
+                    productoCategoria.ProductoModel.Marca = productoCategories.Marca;
+                    productoCategoria.ProductoModel.NombreImagen = productoCategories.NombreImagen;
+                    productoCategoria.ProductoModel.Precio = productoCategories.Precio;
+                    productoCategoria.ProductoModel.ProductoId = productoCategories.Id;
+                    productoCategoria.ProductoModel.Stock = productoCategories.Stock;
+                    productoCategoria.ProductoModel.UrlImagen = productoCategories.UrlImagen;
+
+                    productoCategoria.CategoriaModel = (from ca in this.context.Categoria.ToList()
+                                                        join cal in productoCategories.ProductoCategoria on ca.Id equals cal.CategoriaId
+                                                        select new CategoriaModel()
+                                                        {
+                                                            CategoriaId = ca.Id,
+                                                            Descripcion = ca.Descripcion
+                                                        }).ToList();
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                this.logger.LogError("error obteniendo los productos con sus categorias", ex.Message);
+            }
+
+            return productoCategoria;
         }
 
-        public async override Task Save (Producto entity)
+       
+        public async override Task Save(Producto entity)
         {
             if (!await this.context.Categoria.AnyAsync(cd => cd.Id == entity.IdCategoria)) 
             { 
@@ -46,9 +106,10 @@ namespace OnlineStore.Infraestructure.Repositories
             await base.SaveChanges();
         }
 
-        Task<List<ProductoModel>> IproductoRepository.GetProductoByCategory(int categoryId)
+        public override async Task Update(Producto entity)
         {
-            throw new NotImplementedException();
+            await base.Update(entity);
+            await base.SaveChanges();
         }
     }
 }
