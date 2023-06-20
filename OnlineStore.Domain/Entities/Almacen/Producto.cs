@@ -1,4 +1,4 @@
-﻿using OnlineStore.Domain.Core;
+﻿
 using System.Collections.Generic;
 
 namespace OnlineStore.Domain.Entities.Almacen

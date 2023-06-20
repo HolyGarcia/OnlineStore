@@ -1,5 +1,4 @@
 ﻿
-using OnlineStore.Domain.Core;
 
 namespace OnlineStore.Domain.Entities.Seguridad
 {

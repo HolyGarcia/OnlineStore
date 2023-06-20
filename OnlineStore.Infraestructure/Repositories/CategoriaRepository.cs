@@ -1,14 +1,14 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using OnlineStore.Domain.Entities.Almacen;
 using OnlineStore.Infraestructure.Context;
 using OnlineStore.Infraestructure.Core;
 using OnlineStore.Infraestructure.Interfaces;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
 
 namespace OnlineStore.Infraestructure.Repositories
 {
@@ -22,6 +22,23 @@ namespace OnlineStore.Infraestructure.Repositories
             this.logger = logger;
         }
 
-        
+        public async override Task<IEnumerable<Categoria>> GetAll()
+        {
+            List<Categoria> categorias = new List<Categoria>();
+
+            try
+            {
+
+                categorias = await this.context.Categoria.Where(cd => !cd.Eliminado).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError("Error obteniendo las categorias", ex.ToString());
+            }
+
+            return categorias;
+        }
+
+
     }
 }

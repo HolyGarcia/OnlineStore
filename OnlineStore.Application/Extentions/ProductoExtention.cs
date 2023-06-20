@@ -18,7 +18,7 @@ namespace OnlineStore.Application.Extentions
                 Precio = productoAddDto.Precio,
                 Stock = productoAddDto.Stock,
                 UrlImagen = productoAddDto.UrlImagen,
-                FechaRegistro = productoAddDto.Fecha,
+                FechaRegistro = productoAddDto.Fecha
                 
 
         };

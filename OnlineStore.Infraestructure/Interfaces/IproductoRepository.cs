@@ -10,7 +10,7 @@ namespace OnlineStore.Infraestructure.Interfaces
 {
     public interface IproductoRepository : IBaseRepository<Producto>
     {
-        Task<List<ProductoModel>> GetProductoByCategoria(int categoriaId);
+        Task<List<ProductoModel>> GetProductoByCategory(int categoriaId);
         Task<ProductoCategoriaModel> GetProductoCategoria(int productoId);
     }
 }

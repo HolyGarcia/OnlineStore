@@ -1,7 +1,22 @@
+using OnlineStore.Web.Dependencies;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+builder.Services.AddHttpClient();
+
+#region "Apis Dependency"
+
+builder.Services.AddApiAlmancenDependency();
+builder.Services.AddAuthDependencyApi();
+
+#endregion
+
+
+builder.Services.AddSession();
 
 var app = builder.Build();
 

@@ -24,7 +24,7 @@ namespace OnlineStore.Infraestructure.Repositories
             this.logger = logger;
         }
 
-        public async Task<List<ProductoModel>> GetProductoByCategoria(int categoriaId)
+        public async Task<List<ProductoModel>> GetProductoByCategory(int categoriaId)
         {
             List<ProductoModel> productos = new List<ProductoModel>();
 
@@ -97,19 +97,21 @@ namespace OnlineStore.Infraestructure.Repositories
        
         public async override Task Save(Producto entity)
         {
-            if (!await this.context.Categoria.AnyAsync(cd => cd.Id == entity.IdCategoria)) 
-            { 
-                throw new ProductoException("Categoría no registrada");
-            }
+          await Task.WhenAll(
 
-            await base.Save(entity);
-            await base.SaveChanges();
+            await base.Save(entity),
+            await base.SaveChanges()
+            );
         }
 
         public override async Task Update(Producto entity)
         {
-            await base.Update(entity);
-            await base.SaveChanges();
+            await Task.WhenAll(
+                base.Update(entity),
+                base.SaveChanges()
+
+            );
+            ;
         }
     }
 }

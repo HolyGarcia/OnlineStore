@@ -9,7 +9,7 @@ namespace OnlineStore.Infraestructure.Context
         public DbSet<Menu> Menu { get; set; }
         public DbSet<MenuRoles> MenuRoles { get; set; }
         public DbSet<Roles> Roles { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
         
     }
 }
