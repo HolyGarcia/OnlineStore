@@ -99,8 +99,8 @@ namespace OnlineStore.Infraestructure.Repositories
         {
           await Task.WhenAll(
 
-            await base.Save(entity),
-            await base.SaveChanges()
+             base.Save(entity),
+             base.SaveChanges()
             );
         }
 

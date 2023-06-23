@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineStore.Application.Contract;
+using OnlineStore.Application.Dtos.Producto.Usuario;
 using OnlineStore.Infraestructure.Interfaces;
 using OnlineStore.Infraestructure.Models.Usuario;
 
@@ -8,33 +10,37 @@ namespace OnlineStore.Api.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        private readonly IUsuarioRepository usuarioRepository;
+        private readonly IUsuarioService usuarioService;
 
-        public UsuarioController(IUsuarioRepository usuarioRepository)
+        public UsuarioController(IUsuarioService usuarioService)
         {
-            this.usuarioRepository = usuarioRepository;
+            this.usuarioService = usuarioService;
         }
 
 
         [HttpGet("GetUsuarios")]
-        public async Task<IActionResult> Get()
+        public void Get()
         {
-            var usuarios = await this.usuarioRepository.GetUsuarios();
 
-            return Ok(usuarios);
         }
 
         // GET api/<UsuarioController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(GetUsuarioInfoDto id)
         {
-            return "value";
+            var usuarios = await this.usuarioService.GetUsuario(id);
+
+            return Ok(usuarios);
         }
 
         // POST api/<UsuarioController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] UsuarioAddDto usuarioAdd)
         {
+
+            var usuarios = await this.usuarioService.SaveUsuario(usuarioAdd);
+
+            return Ok(usuarios);
         }
 
         // PUT api/<UsuarioController>/5

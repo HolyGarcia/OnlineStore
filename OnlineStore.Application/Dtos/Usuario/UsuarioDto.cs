@@ -1,10 +1,10 @@
 ﻿
 
-namespace OnlineStore.Domain.Entities.Seguridad
+namespace OnlineStore.Application.Dtos.Usuario
 {
-    public partial class Usuario : Core.BaseEntity
+    public class UsuarioDto : DtoBase
     {
-        public int Id { get; set; }
+
         public string? Nombre { get; set; }
         public string? Correo { get; set; }
         public string? Telefono { get; set; }
@@ -12,7 +12,6 @@ namespace OnlineStore.Domain.Entities.Seguridad
         public string? UrlFoto { get; set; }
         public string? NombreFoto { get; set; }
         public string? Clave { get; set; }
-
 
     }
 }

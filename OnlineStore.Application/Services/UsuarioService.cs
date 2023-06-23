@@ -1,13 +1,13 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System;
+using Microsoft.Extensions.Logging;
 using OnlineStore.Application.Contract;
 using OnlineStore.Application.Core;
 using OnlineStore.Application.Dtos.Producto.Usuario;
 using OnlineStore.Domain.Entities.Seguridad;
+using OnlineStore.Infraestructure.Core;
 using OnlineStore.Infraestructure.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using OnlineStore.Application.Dtos.Usuario;
 
 namespace OnlineStore.Application.Services
 {
@@ -28,9 +28,8 @@ namespace OnlineStore.Application.Services
 
             try
             {
-                result.Data = await this.usuarioRepository
-                                        .GetUsuario(getUsuarioInfoDto.Correo,
-                                                    getUsuarioInfoDto.Clave);
+                result.Data = await this.usuarioRepository.Find(us => us.Correo == getUsuarioInfoDto.Correo
+                                                   && us.Clave == Encript.GetSHA512(getUsuarioInfoDto.Clave));
             }
             catch (Exception ex)
             {
@@ -43,7 +42,7 @@ namespace OnlineStore.Application.Services
             return result;
         }
 
-        public async Task<ServiceResult> SaveUsuario(UsaurioAddDto productAddDto)
+        public async Task<ServiceResult> SaveUsuario(UsuarioAddDto usuarioAdd)
         {
             ServiceResult result = new ServiceResult();
 
@@ -51,14 +50,16 @@ namespace OnlineStore.Application.Services
             {
                 Usuario usuario = new Usuario()
                 {
-                    Correo = productAddDto.Correo,
-                    Nombre = productAddDto.Nombre,
-                  //  Clave = Encript.GetSHA256(productAddDto.Clave),
-                    IdRol = productAddDto.IdRol,
-                    NombreFoto = productAddDto.NombreFoto,
-                    IdUsuarioCreacion = productAddDto.IdUsuario,
-                    Telefono = productAddDto.Telefono,
-                    UrlFoto = productAddDto.UrlFoto
+                    Correo = usuarioAdd.Correo,
+                    Nombre = usuarioAdd.Nombre,
+                    Clave = Encript.GetSHA512(usuarioAdd.Clave),
+                    IdRol = usuarioAdd.IdRol,
+                    NombreFoto = usuarioAdd.NombreFoto,
+                    IdUsuarioCreacion = usuarioAdd.IdUsuarioCreacion,
+                    Telefono = usuarioAdd.Telefono,
+                    UrlFoto = usuarioAdd.UrlFoto
+                   
+                    
                 };
 
                 await this.usuarioRepository.Save(usuario);
@@ -74,5 +75,6 @@ namespace OnlineStore.Application.Services
             return result;
         }
 
+    
     }
 }
