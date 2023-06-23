@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using OnlineStore.Application.Contract;
 using OnlineStore.Application.Core;
-using OnlineStore.Application.Dtos.Producto.Usuario;
+using OnlineStore.Application.Dtos.Producto;
 using OnlineStore.Domain.Entities.Seguridad;
 using OnlineStore.Infraestructure.Core;
 using OnlineStore.Infraestructure.Interfaces;
@@ -42,7 +42,7 @@ namespace OnlineStore.Application.Services
             return result;
         }
 
-        public async Task<ServiceResult> SaveUsuario(UsuarioAddDto usuarioAdd)
+        public async Task<ServiceResult> SaveUsuario(UsuarioAddDto productoAddDto)
         {
             ServiceResult result = new ServiceResult();
 
@@ -50,14 +50,14 @@ namespace OnlineStore.Application.Services
             {
                 Usuario usuario = new Usuario()
                 {
-                    Correo = usuarioAdd.Correo,
-                    Nombre = usuarioAdd.Nombre,
-                    Clave = Encript.GetSHA512(usuarioAdd.Clave),
-                    IdRol = usuarioAdd.IdRol,
-                    NombreFoto = usuarioAdd.NombreFoto,
-                    IdUsuarioCreacion = usuarioAdd.IdUsuarioCreacion,
-                    Telefono = usuarioAdd.Telefono,
-                    UrlFoto = usuarioAdd.UrlFoto
+                    Correo = productoAddDto.Correo,
+                    Nombre = productoAddDto.Nombre,
+                    Clave = Encript.GetSHA512(productoAddDto.Clave),
+                    IdRol = productoAddDto.IdRol,
+                    NombreFoto = productoAddDto.NombreFoto,
+                    IdUsuarioCreacion = productoAddDto.IdUsuario,
+                    Telefono = productoAddDto.Telefono,
+                    UrlFoto = productoAddDto.UrlFoto
                    
                     
                 };

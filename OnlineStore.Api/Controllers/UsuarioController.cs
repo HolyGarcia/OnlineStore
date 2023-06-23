@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineStore.Application.Contract;
-using OnlineStore.Application.Dtos.Producto.Usuario;
+using OnlineStore.Application.Dtos.Usuario;
+using OnlineStore.Domain.Entities.Seguridad;
 using OnlineStore.Infraestructure.Interfaces;
-using OnlineStore.Infraestructure.Models.Usuario;
+using OnlineStore.Infraestructure.Repositories;
 
 namespace OnlineStore.Api.Controllers
 {
@@ -10,37 +10,38 @@ namespace OnlineStore.Api.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        private readonly IUsuarioService usuarioService;
+        private readonly IUsuarioRepository usuarioRepository;
 
-        public UsuarioController(IUsuarioService usuarioService)
+        public UsuarioController(UsuarioRepository usuarioRepository)
         {
-            this.usuarioService = usuarioService;
+            this.usuarioRepository = usuarioRepository;
         }
 
 
         [HttpGet("GetUsuarios")]
-        public void Get()
+        public async Task<IActionResult> Get()
         {
+            var usuarios = await this.usuarioRepository.GetUsuarios();
 
+            return Ok(usuarios);
         }
 
         // GET api/<UsuarioController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(GetUsuarioInfoDto id)
+        public string Get(int id)
         {
-            var usuarios = await this.usuarioService.GetUsuario(id);
-
-            return Ok(usuarios);
+            return "value";
         }
 
         // POST api/<UsuarioController>
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UsuarioAddDto usuarioAdd)
+        [HttpPost("SaveUsuario")]
+        public async Task<IActionResult> Post([FromBody] UsuarioAddDto productoAddDto)
         {
 
-            var usuarios = await this.usuarioService.SaveUsuario(usuarioAdd);
+            var usuario = await this.usuarioRepository.Save(usuario);
 
-            return Ok(usuarios);
+
+            return Ok(usuario);
         }
 
         // PUT api/<UsuarioController>/5

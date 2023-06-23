@@ -4,7 +4,7 @@ namespace OnlineStore.Application.Dtos.Usuario
 {
     public class UsuarioDto : DtoBase
     {
-
+       
         public string? Nombre { get; set; }
         public string? Correo { get; set; }
         public string? Telefono { get; set; }

@@ -8,7 +8,6 @@ using OnlineStore.Infraestructure.Models.Usuario;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace OnlineStore.Infraestructure.Repositories
@@ -73,10 +72,14 @@ namespace OnlineStore.Infraestructure.Repositories
 
         public async override Task Save(Usuario entity)
         {
-            await base.Save(entity);
-            await base.SaveChanges();
+            await Task.WhenAll(
+             base.Save(entity),
+             base.SaveChanges()
+                );
+            
         }
 
 
     }
 }
+
