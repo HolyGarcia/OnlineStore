@@ -38,11 +38,6 @@ namespace OnlineStore.Api.Controllers
         public async Task<IActionResult> Post([FromBody] UsuarioAddDto productoAddDto)
         {
 
-            var usuario = await this.usuarioRepository.Save(usuario);
-
-
-            return Ok(usuario);
-        }
 
         // PUT api/<UsuarioController>/5
         [HttpPut("{id}")]
