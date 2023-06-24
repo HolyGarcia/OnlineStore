@@ -17,10 +17,7 @@ namespace OnlineStore.Web.Controllers
             return View();
         }
 
-        private IActionResult View()
-        {
-            throw new NotImplementedException();
-        }
+
 
         [HttpPost]
         public async Task<IActionResult> Login(ObtenerTokenRequest request)

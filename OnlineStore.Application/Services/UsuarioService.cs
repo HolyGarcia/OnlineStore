@@ -2,12 +2,14 @@
 using Microsoft.Extensions.Logging;
 using OnlineStore.Application.Contract;
 using OnlineStore.Application.Core;
-using OnlineStore.Application.Dtos.Producto;
 using OnlineStore.Domain.Entities.Seguridad;
 using OnlineStore.Infraestructure.Core;
 using OnlineStore.Infraestructure.Interfaces;
 using System.Threading.Tasks;
 using OnlineStore.Application.Dtos.Usuario;
+using OnlineStore.Application.Responses;
+using OnlineStore.Application.Dtos.Producto;
+using OnlineStore.Application.Extentions;
 
 namespace OnlineStore.Application.Services
 {
@@ -28,8 +30,9 @@ namespace OnlineStore.Application.Services
 
             try
             {
-                result.Data = await this.usuarioRepository.Find(us => us.Correo == getUsuarioInfoDto.Correo
-                                                   && us.Clave == Encript.GetSHA512(getUsuarioInfoDto.Clave));
+                result.Data = await this.usuarioRepository
+                                                    .GetUsuario(getUsuarioInfoDto.Correo,
+                                                    getUsuarioInfoDto.Clave);
             }
             catch (Exception ex)
             {
@@ -42,37 +45,25 @@ namespace OnlineStore.Application.Services
             return result;
         }
 
-        public async Task<ServiceResult> SaveUsuario(UsuarioAddDto productoAddDto)
+        public async Task<UsuarioAddResponse> SaveUsuario(UsuarioAddDto usuarioAddDto)
         {
-            ServiceResult result = new ServiceResult();
+            UsuarioAddResponse usuarioAddResponse = new UsuarioAddResponse();
 
             try
             {
-                Usuario usuario = new Usuario()
-                {
-                    Correo = productoAddDto.Correo,
-                    Nombre = productoAddDto.Nombre,
-                    Clave = Encript.GetSHA512(productoAddDto.Clave),
-                    IdRol = productoAddDto.IdRol,
-                    NombreFoto = productoAddDto.NombreFoto,
-                    IdUsuarioCreacion = productoAddDto.IdUsuario,
-                    Telefono = productoAddDto.Telefono,
-                    UrlFoto = productoAddDto.UrlFoto
-                   
-                    
-                };
+                Usuario usuario = usuarioAddDto.ConvertDtoAddUsuarioToUsuario();
+
 
                 await this.usuarioRepository.Save(usuario);
+                usuarioAddResponse.UsuarioId = usuario.Id;
             }
             catch (Exception ex)
             {
-                result.Success = false;
-                result.Message = "Error guardando el usuario: ";
-                this.logger.LogError($"{result.Message} {ex.Message}", ex.ToString());
+                this.logger.Log(LogLevel.Error, "Error al Agregar el usuario", ex.ToString());
 
             }
 
-            return result;
+            return usuarioAddResponse;
         }
 
     

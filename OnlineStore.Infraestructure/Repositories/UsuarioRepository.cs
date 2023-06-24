@@ -29,7 +29,7 @@ namespace OnlineStore.Infraestructure.Repositories
             try
             {
                 Usuario usuario = await this.context.Usuario.SingleOrDefaultAsync(us => us.Correo == correo
-                                          && us.Clave == Encript.GetSHA512(clave));
+                                          && us.Clave == Encript.GetSHA256(clave));
 
                 usuarioModel = new UsuarioModel()
                 {
@@ -41,6 +41,9 @@ namespace OnlineStore.Infraestructure.Repositories
                     Telefono = usuario.Telefono,
                     UrlFoto = usuario.UrlFoto
                 };
+
+                if (String.IsNullOrEmpty(clave))
+                    throw new ArgumentNullException(nameof(clave));
 
             }
             catch (Exception ex)
@@ -73,13 +76,12 @@ namespace OnlineStore.Infraestructure.Repositories
         public async override Task Save(Usuario entity)
         {
             await Task.WhenAll(
-             base.Save(entity),
-             base.SaveChanges()
-                );
-            
+                base.Save(entity),
+                base.SaveChanges()
+
+                 );
+
         }
-
-
     }
 }
 

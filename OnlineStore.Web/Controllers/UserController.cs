@@ -15,6 +15,7 @@ namespace OnlineStore.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+         
             return View();
         }
         public IActionResult RegisterUser()

@@ -1,4 +1,6 @@
 using OnlineStore.Web.Dependencies;
+using OnlineStore.Web.ApiServices.Services;
+using OnlineStore.Web.Dependencies;
 
 var builder = WebApplication.CreateBuilder(args);
 

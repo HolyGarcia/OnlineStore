@@ -2,6 +2,9 @@
 using OnlineStore.Web.ApiServices.Interfaces;
 using OnlineStore.Web.Models.Requests;
 using OnlineStore.Web.Models.Responses;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using static System.Net.WebRequestMethods;
 
 namespace OnlineStore.Web.Controllers
 {
@@ -28,7 +31,7 @@ namespace OnlineStore.Web.Controllers
             try
             {
 
-                this.productoApiService.Token = base.GetToken();
+               // this.productoApiService.Token = base.GetToken();
                 productoList = await this.productoApiService.GetProductos();
 
 

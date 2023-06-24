@@ -14,13 +14,12 @@ namespace OnlineStore.IOC.Dependencies
             #region "Repositories"
             services.AddScoped<IcategoriaRepository, CategoriaRepository>();
             services.AddScoped<IproductoRepository, ProductoRepository>();
-            services.AddScoped<IUsuarioRepository, UsuarioRepository>();    
+           
             #endregion
 
             #region "Services"
 
             services.AddTransient<IProductoService, ProductoService>();
-            services.AddTransient<IUsuarioService, UsuarioService>();
 
             #endregion
 

@@ -34,9 +34,10 @@ namespace OnlineStore.Api.Controllers
         }
 
         // POST api/<UsuarioController>
-        [HttpPost("SaveUsuario")]
-        public async Task<IActionResult> Post([FromBody] UsuarioAddDto productoAddDto)
+        [HttpPost]
+        public void Post([FromBody] string value)
         {
+        }
 
 
         // PUT api/<UsuarioController>/5
