@@ -13,7 +13,7 @@ namespace OnlineStore.Application.Extentions
             {
                 Correo = usuarioAddDto.Correo,
                 Nombre = usuarioAddDto.Nombre,
-                Clave = Encript.GetSHA512(usuarioAddDto.Clave),
+                Clave = Encript.GetSHA256(usuarioAddDto.Clave),
                 IdRol = usuarioAddDto.IdRol,
                 NombreFoto = usuarioAddDto.NombreFoto,
                 IdUsuarioCreacion = usuarioAddDto.IdUsuario,

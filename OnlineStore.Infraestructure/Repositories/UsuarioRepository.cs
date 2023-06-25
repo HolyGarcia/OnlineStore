@@ -8,6 +8,8 @@ using OnlineStore.Infraestructure.Models.Usuario;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace OnlineStore.Infraestructure.Repositories
@@ -29,7 +31,7 @@ namespace OnlineStore.Infraestructure.Repositories
             try
             {
                 Usuario usuario = await this.context.Usuario.SingleOrDefaultAsync(us => us.Correo == correo
-                                          && us.Clave == Encript.GetSHA512(clave));
+                                          && us.Clave == Encript.GetSHA256(clave));
 
                 usuarioModel = new UsuarioModel()
                 {
@@ -42,8 +44,7 @@ namespace OnlineStore.Infraestructure.Repositories
                     UrlFoto = usuario.UrlFoto
                 };
 
-                if (String.IsNullOrEmpty(clave))
-                    throw new ArgumentNullException(nameof(clave));
+
 
             }
             catch (Exception ex)

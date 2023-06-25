@@ -5,6 +5,7 @@ using OnlineStore.Application.Dtos.Usuario;
 using OnlineStore.Application.Models;
 using OnlineStore.Auth.Api.Core;
 using OnlineStore.Infraestructure.Models.Usuario;
+using System.Text;
 
 namespace OnlineStore.Auth.Api.Controllers
 {
@@ -37,10 +38,11 @@ namespace OnlineStore.Auth.Api.Controllers
         {
             var result = await this.usuarioService.GetUsuario(getUsuarioInfoDto);
            
+            
             if (result.Success)
             {
                 UsuarioModel usuario =  (UsuarioModel)result.Data;
-                TokenInfo tokenInfo =  TokenHelper.GetToken(usuario, this.configuration["TokenInfo:"]);
+                TokenInfo tokenInfo =  TokenHelper.GetToken(usuario, this.configuration["TokenInfo:SigningKey"]);
 
 
                     result.Data = tokenInfo;

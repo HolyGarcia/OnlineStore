@@ -9,6 +9,7 @@ namespace OnlineStore.Auth.Api.Core
 {
     public static class TokenHelper
     {
+        static string hola = string.Empty;
         
         public static TokenInfo GetToken(UsuarioModel usuario, string SigningKey)
         {
@@ -25,7 +26,7 @@ namespace OnlineStore.Auth.Api.Core
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 
             };
 
