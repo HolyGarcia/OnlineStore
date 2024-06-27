@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Domain.Entities.Almacen;
 using OnlineStore.Infraestructure.Interfaces;
 
@@ -6,6 +8,7 @@ namespace OnlineStore.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CategoriaController : ControllerBase
     {
         private readonly IcategoriaRepository categoriaRepository;
@@ -22,10 +25,12 @@ namespace OnlineStore.Api.Controllers
             return Ok(categories);
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public string Get(int id)
         {
-            var categories = await this.categoriaRepository.GetEntityById(id);
-            return Ok(categories);
+            //var categories = await this.categoriaRepository.GetEntityById(id);
+            // return Ok(categories);
+
+            return "value";
 
         }
 
@@ -35,6 +40,7 @@ namespace OnlineStore.Api.Controllers
             //var categories = await this.categoriaRepository.Save(categoria);
             //return Ok(categories);
         }
+
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] String value)
         {

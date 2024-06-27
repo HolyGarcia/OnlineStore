@@ -21,17 +21,26 @@ namespace OnlineStore.Auth.Api.Controllers
             this.usuarioService = usuarioService;
             this.configuration = configuration;
         }
+
         [HttpPost("CrearUsuario")]
-        public async Task<IActionResult> Post([FromBody] UsuarioAddDto usuarioAddDto)
+        public async Task<IActionResult> CrearUsuario(UsuarioAddDto usuarioAdd)
         {
-
-            var result = await this.usuarioService.SaveUsuario(usuarioAddDto);
-
-            if (!result.Success)
-                return BadRequest(result);
+            var result = await this.usuarioService.SaveUsuario(usuarioAdd);
 
             return Ok(result);
         }
+
+        //[HttpPost("CrearUsuario")]
+        //public async Task<IActionResult> Post([FromBody] UsuarioAddDto usuarioAddDto)
+        //{
+
+        //    var result = await this.usuarioService.SaveUsuario(usuarioAddDto);
+
+        //    if (!result.Success)
+        //        return BadRequest(result);
+
+        //    return Ok(result);
+        //}
 
         [HttpPost("ObtenerTokenUsuario")]
         public async Task<IActionResult> ObtenerTokenUsuario(GetUsuarioInfoDto getUsuarioInfoDto)

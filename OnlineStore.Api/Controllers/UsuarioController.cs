@@ -12,7 +12,7 @@ namespace OnlineStore.Api.Controllers
     {
         private readonly IUsuarioRepository usuarioRepository;
 
-        public UsuarioController(UsuarioRepository usuarioRepository)
+        public UsuarioController(IUsuarioRepository usuarioRepository)
         {
             this.usuarioRepository = usuarioRepository;
         }

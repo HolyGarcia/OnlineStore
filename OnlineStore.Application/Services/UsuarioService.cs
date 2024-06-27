@@ -45,26 +45,59 @@ namespace OnlineStore.Application.Services
             return result;
         }
 
-        public async Task<UsuarioAddResponse> SaveUsuario(UsuarioAddDto usuarioAddDto)
+        public async Task<ServiceResult> SaveUsuario(UsuarioAddDto productoAddDto)
         {
-            UsuarioAddResponse usuarioAddResponse = new UsuarioAddResponse();
+            ServiceResult result = new ServiceResult();
 
             try
             {
-                Usuario usuario = usuarioAddDto.ConvertDtoAddUsuarioToUsuario();
-
+                Usuario usuario = new Usuario()
+                {
+                    Correo = productoAddDto.Correo,
+                    Nombre = productoAddDto.Nombre,
+                    Clave = Encript.GetSHA256(productoAddDto.Clave),
+                    IdRol = productoAddDto.IdRol,
+                    NombreFoto = productoAddDto.NombreFoto,
+                    IdUsuarioCreacion = productoAddDto.IdUsuario,
+                    Telefono = productoAddDto.Telefono,
+                    UrlFoto = productoAddDto.UrlFoto
+                };
 
                 await this.usuarioRepository.Save(usuario);
-                usuarioAddResponse.UsuarioId = usuario.Id;
+
             }
+
             catch (Exception ex)
             {
-                this.logger.Log(LogLevel.Error, "Error al Agregar el usuario", ex.ToString());
-
+                result.Success = false;
+                result.Message = "Error guardando el usuario: ";
+                this.logger.LogError($"{result.Message} {ex.Message}", ex.ToString());
             }
 
-            return usuarioAddResponse;
+            return result;
         }
+
+
+        //public async Task<UsuarioAddResponse> SaveUsuario(UsuarioAddDto usuarioAddDto)
+        //{
+        //    UsuarioAddResponse usuarioAddResponse = new UsuarioAddResponse();
+
+        //    try
+        //    {
+        //        Usuario usuario = usuarioAddDto.ConvertDtoAddUsuarioToUsuario();
+
+
+        //        await this.usuarioRepository.Save(usuario);
+        //        usuarioAddResponse.UsuarioId = usuario.Id;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        this.logger.Log(LogLevel.Error, "Error al Agregar el usuario", ex.ToString());
+
+        //    }
+
+        //    return usuarioAddResponse;
+        //}
 
     
     }

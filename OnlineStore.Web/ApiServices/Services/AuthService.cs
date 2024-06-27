@@ -70,6 +70,12 @@ namespace OnlineStore.Web.ApiServices.Services
                             obtenerToken = JsonConvert.DeserializeObject<ObtenerTokenResponse>(apiResult);
 
                         }
+
+                        else
+                        {
+                            obtenerToken.success = false;
+                            obtenerToken.message = $"Error al llamar al servicio. StatusCode:{response.StatusCode}"; 
+                        }
                     }
                 }
             }

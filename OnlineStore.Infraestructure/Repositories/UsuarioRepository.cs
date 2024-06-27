@@ -12,6 +12,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace OnlineStore.Infraestructure.Repositories
 {
     public class UsuarioRepository : BaseRepository<Usuario>, IUsuarioRepository

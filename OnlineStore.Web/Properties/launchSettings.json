@@ -7,7 +7,7 @@
       "sslPort": 0
     }
   },
-  "profiles": {
+  
     "OnlineStore.Web": {
       "commandName": "Project",
       "dotnetRunMessages": true,
@@ -17,12 +17,13 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+    "profiles": {
+      "IIS Express": {
+        "commandName": "IISExpress",
+        "launchBrowser": true,
+        "environmentVariables": {
+          "ASPNETCORE_ENVIRONMENT": "Development"
+        }
       }
-    }
   }
 }

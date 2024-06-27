@@ -8,7 +8,7 @@ namespace OnlineStore.Application.Contract
 {
     public interface IUsuarioService
     {
-        Task<UsuarioAddResponse> SaveUsuario(UsuarioAddDto usuarioAddDto);
+        Task<ServiceResult> SaveUsuario(UsuarioAddDto productoAddDto);
 
         Task<ServiceResult> GetUsuario(GetUsuarioInfoDto getUsuarioInfoDto);
 
